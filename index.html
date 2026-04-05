@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excellearn Wealth Tracker - Catat Keuangan Cuma Modal Ngechat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1440714247025761');
+    fbq('track', 'PageView');
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF8C42',
+                        primaryDark: '#E67835',
+                        primaryLight: '#FFB380',
+                        bgMain: '#FAFAF9',
+                        bgCard: '#FFFFFF',
+                        textDark: '#1C1917',
+                        textMuted: '#57534E',
+                        textLight: '#78716C',
+                        border: '#E7E5E4',
+                        borderLight: '#F5F5F4',
+                        success: '#22C55E',
+                        warning: '#F59E0B',
+                    },
+                    fontFamily: {
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --primary: #FF8C42;
+            --primary-dark: #E67835;
+            --bg-main: #FAFAF9;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .animate-pulse-soft {
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FF8C42 0%, #E67835 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 50%, #FED7AA 100%);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF8C42 0%, #E67835 100%);
+            transition: all 0.3s ease;
+            text-decoration: none !important;
+            color: #FFFFFF !important;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -5px rgba(255, 140, 66, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .pattern-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FF8C42' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .sticky-cta {
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FAQ Styles */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: #FFFFFF;
+            border: 1px solid #E7E5E4;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255, 140, 66, 0.3);
+            box-shadow: 0 4px 20px rgba(255, 140, 66, 0.1);
+        }
+
+        .faq-item.open {
+            border-color: #FF8C42;
+            box-shadow: 0 4px 20px rgba(255, 140, 66, 0.15);
+        }
+
+        .faq-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .faq-trigger:hover {
+            background: rgba(255, 140, 66, 0.03);
+        }
+
+        .faq-trigger:focus {
+            outline: none;
+        }
+
+        .faq-question {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: #1C1917;
+            padding-right: 16px;
+        }
+
+        .faq-icon-wrapper {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 140, 66, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.open .faq-icon-wrapper {
+            background: #FF8C42;
+        }
+
+        .faq-icon {
+            width: 16px;
+            height: 16px;
+            color: #FF8C42;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(180deg);
+            color: #FFFFFF;
+        }
+
+        .faq-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.35s ease;
+        }
+
+        .faq-item.open .faq-content {
+            grid-template-rows: 1fr;
+        }
+
+        .faq-content-inner {
+            overflow: hidden;
+        }
+
+        .faq-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #E7E5E4, transparent);
+            margin: 0 20px;
+        }
+
+        .faq-answer {
+            padding: 16px 20px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #57534E;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #1C1917;
+        }
+
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .carousel-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .carousel-nav-btn:hover {
+            background: #FFFFFF;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .carousel-nav-btn.prev {
+            left: 12px;
+        }
+
+        .carousel-nav-btn.next {
+            right: 12px;
+        }
+
+        .carousel-nav-btn svg {
+            width: 18px;
+            height: 18px;
+            color: #1C1917;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 0;
+            background: linear-gradient(to top, rgba(28, 25, 23, 1) 0%, rgba(28, 25, 23, 0.95) 100%);
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+
+        .carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .carousel-dot.active {
+            background: #FF8C42;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .carousel-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: #FF8C42;
+            transition: width 0.1s linear;
+            z-index: 10;
+        }
+
+        .comparison-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border-bottom: 1px solid #E7E5E4;
+        }
+
+        /* Hide scrollbar for testimonial slider */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .no-underline {
+            text-decoration: none !important;
+        }
+    </style>
+</head>
+
+<body class="bg-bgMain text-textDark pattern-bg">
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1440714247025761&ev=PageView&noscript=1"
+    /></noscript>
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-border/50 transition-transform duration-300">
+        <div class="max-w-md mx-auto px-4 py-4 flex flex-col items-center justify-center">
+            <span class="font-display font-bold text-lg text-textDark flex items-center gap-2">
+                Excellearn <span class="text-primary">Wealth Tracker</span>
+            </span>
+        </div>
+    </header>
+
+    <section class="hero-gradient pt-6 pb-10 px-4">
+        <div class="max-w-md mx-auto">
+            <div class="flex justify-center mb-6 reveal">
+                <div class="inline-flex items-center gap-2 bg-white/90 px-4 py-2 rounded-full card-shadow">
+                    <span class="w-2 h-2 bg-success rounded-full animate-pulse-soft"></span>
+                    <span class="text-sm font-medium text-textDark">Sisa Slot: <span id="slot-count" class="text-primary font-bold">37</span></span>
+                </div>
+            </div>
+
+            <div class="relative mb-6 reveal" style="animation-delay: 0.1s;">
+                <div class="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl"></div>
+                <img src="hero-image.png"
+                    onerror="this.onerror=null; this.src='https://placehold.co/600x400/FFF7ED/FF8C42?text=Chat+Your+Expenses';"
+                    alt="Excellearn Wealth Tracker Interface"
+                    class="relative rounded-2xl card-shadow w-full animate-float">
+                <div class="absolute -right-2 top-4 bg-white px-3 py-2 rounded-lg card-shadow text-sm font-medium animate-pulse-soft">
+                    <span class="text-success">+</span> Rp 150.000
+                </div>
+                <div class="absolute -left-2 bottom-8 bg-white px-3 py-2 rounded-lg card-shadow text-sm font-medium animate-pulse-soft" style="animation-delay: 0.5s;">
+                    <span class="text-red-500">-</span> Rp 45.000
+                </div>
+            </div>
+
+            <div class="text-center reveal" style="animation-delay: 0.2s;">
+                <h1 class="font-display text-2xl sm:text-3xl font-bold leading-tight mb-4">
+                    Catat Keuangan Cuma Modal Ngechat.
+                    <span class="gradient-text">Datanya Aman di Google Sheets Kamu Sendiri.</span>
+                </h1>
+                <p class="text-textMuted text-base mb-6 leading-relaxed">
+                    Lagi bingung ngatur keuangan? Bingung duit kemana aja? Tenang, sekarang catat pengeluaran semudah chat temen. Bisa voice input lagi!
+                </p>
+
+                <a href="#conversion" data-action="cta-click" class="btn-primary no-underline inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-white text-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Mulai Catat dengan AI
+                </a>
+                <p class="text-textLight text-xs mt-3">Akses instan. Tidak perlu install aplikasi.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 bg-white">
+        <div class="max-w-md mx-auto">
+            <div class="reveal">
+                <div class="text-center mb-8">
+                    <span class="inline-block bg-red-50 text-red-600 text-xs font-semibold px-3 py-1 rounded-full mb-3">MASALAH YANG SERING TERJADI</span>
+                    <h2 class="font-display text-xl font-bold text-textDark">Pernah Gini Gak?</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4 p-4 bg-bgMain rounded-xl card-hover cursor-default">
+                        <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-textDark mb-1">Aplikasi catat keuangan ribet</h3>
+                            <p class="text-textMuted text-sm">Harus input manual, pilih kategori, kadang malas buka aplikasinya</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 bg-bgMain rounded-xl card-hover cursor-default">
+                        <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-textDark mb-1">Gajih udah abis, gatahu kemana</h3>
+                            <p class="text-textMuted text-sm">Akhir bulan bingung, duit udah habis tapi gak ada catatan jelas</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 bg-bgMain rounded-xl card-hover cursor-default">
+                        <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-textDark mb-1">Sering lupa catat transaksi</h3>
+                            <p class="text-textMuted text-sm">Lagi sibuk, malas buka HP, akhirnya transaksi hilang tidak tercatat</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 bg-bgMain rounded-xl card-hover cursor-default">
+                        <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-textDark mb-1">Khawatir data kebocor</h3>
+                            <p class="text-textMuted text-sm">Takut data keuangan pribadi diambil pihak lain atau dijual</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 bg-gradient-to-b from-bgMain to-orange-50">
+        <div class="max-w-md mx-auto reveal">
+            <div class="text-center mb-6">
+                <h2 class="font-display text-xl font-bold text-textDark mb-4">Bayangin Kalo Gak Segera Diatur...</h2>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-primary">
+                <ul class="space-y-3 text-textMuted">
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                        <span>Sleep makin sulit karena kepala pusing mikirin duit</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                        <span>Target tabungan gak pernah kecapaian</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                        <span>Waktu terbuang bikin laporan keuangan manual</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                        <span>Stres tiap akhir bulan cek saldo</span>
+                    </li>
+                </ul>
+            </div>
+
+            <p class="text-center text-textMuted mt-6 text-sm">
+                Padahal solusinya simpel banget... <span class="text-primary font-semibold">Catat dengan cara yang kamu suka.</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 bg-white">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-8 reveal">
+                <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-3">SOLUSI UNTUK KAMU</span>
+                <h2 class="font-display text-2xl font-bold text-textDark mb-4">
+                    Kenalan sama <span class="gradient-text">Excellearn Wealth Tracker</span>
+                </h2>
+                <p class="text-textMuted">
+                    Catat keuangan pakai bahasa sehari-hari via chat AI. Bisa voice input, bisa banyak transaksi sekali chat, dan data aman di Google Sheets kamu sendiri.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-gradient-to-r from-orange-50 to-white p-5 rounded-xl card-shadow reveal" style="animation-delay: 0.1s;">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-textDark">Chat Seperti Temen</h3>
+                            <p class="text-textMuted text-sm">Tinggal ketik atau voice, AI langsung catat. Misal: "Tadi beli kopi 25rb, makan siang 35rb"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-orange-50 to-white p-5 rounded-xl card-shadow reveal" style="animation-delay: 0.2s;">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-textDark">Voice Input Support</h3>
+                            <p class="text-textMuted text-sm">Lagi di jalan? Tinggal bicara, transaksi langsung tercatat otomatis</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-orange-50 to-white p-5 rounded-xl card-shadow reveal" style="animation-delay: 0.3s;">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-textDark">Multi-Transaction</h3>
+                            <p class="text-textMuted text-sm">Satu chat, banyak transaksi langsung kecatat semua. Hemat waktu!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-orange-50 to-white p-5 rounded-xl card-shadow reveal" style="animation-delay: 0.4s;">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-textDark">Data Aman di Google Sheets</h3>
+                            <p class="text-textMuted text-sm">Data kamu disimpan di Google Sheets pribadi. Bukan di server orang lain!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 reveal" style="animation-delay: 0.5s;">
+                <div class="carousel-container card-shadow">
+                    <div class="carousel-progress" id="carousel-progress"></div>
+
+                    <button class="carousel-nav-btn prev" id="carousel-prev" aria-label="Previous slide">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+
+                    <button class="carousel-nav-btn next" id="carousel-next" aria-label="Next slide">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                    </button>
+
+                    <div class="carousel-track" id="carousel-track">
+                        <div class="carousel-slide">
+                            <div class="slide-content p-2">
+                                <div class="relative w-full aspect-square flex items-center justify-center rounded-xl overflow-hidden bg-[#1C1917]">
+                                    <img src="slide1.webp" alt="Slide 1" class="absolute inset-0 w-full h-full object-contain">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-slide">
+                            <div class="slide-content p-2">
+                                <div class="relative w-full aspect-square flex items-center justify-center rounded-xl overflow-hidden bg-[#1C1917]">
+                                    <img src="slide2.webp" alt="Slide 2" class="absolute inset-0 w-full h-full object-contain">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-slide">
+                            <div class="slide-content p-2">
+                                <div class="relative w-full aspect-square flex items-center justify-center rounded-xl overflow-hidden bg-[#1C1917]">
+                                    <img src="slide3.webp" alt="Slide 3" class="absolute inset-0 w-full h-full object-contain">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-slide">
+                            <div class="slide-content p-2">
+                                <div class="relative w-full aspect-square flex items-center justify-center rounded-xl overflow-hidden bg-[#1C1917]">
+                                    <img src="slide4.webp" alt="Slide 4" class="absolute inset-0 w-full h-full object-contain">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-dots" id="carousel-dots">
+                        <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+                        <button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button>
+                        <button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button>
+                        <button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 bg-bgMain">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-8 reveal">
+                <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-3">PERBANDINGAN</span>
+                <h2 class="font-display text-xl font-bold text-textDark">Cara Lama vs Excellearn</h2>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow overflow-hidden reveal">
+                <table class="comparison-table w-full text-sm">
+                    <thead>
+                        <tr class="bg-bgMain">
+                            <th class="text-left p-4 font-semibold text-textDark">Fitur</th>
+                            <th class="text-center p-4 font-semibold text-textLight">Cara Lama</th>
+                            <th class="text-center p-4 font-semibold text-primary">Excellearn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-4 text-textMuted">Input Data</td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            </td>
+                        </tr>
+                        <tr class="bg-bgMain/50">
+                            <td class="p-4 text-textMuted">Voice Input</td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 text-textMuted">Multi-Transaksi</td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            </td>
+                        </tr>
+                        <tr class="bg-bgMain/50">
+                            <td class="p-4 text-textMuted">Data di G-Sheets Sendiri</td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 text-textMuted">Perlu Install App</td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            </td>
+                            <td class="p-4 text-center">
+                                <svg class="w-5 h-5 mx-auto text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 bg-white overflow-hidden">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-8 reveal">
+                <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-3">TESTIMONI</span>
+                <h2 class="font-display text-xl font-bold text-textDark">Kata Mereka yang Udah Pake</h2>
+            </div>
+
+            <div class="reveal">
+                <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 hide-scrollbar w-full" id="testi-track" style="scroll-behavior: smooth;">
+                    
+                    <div class="snap-center shrink-0 w-[85%]">
+                        <div class="bg-white rounded-[20px] p-6 border border-borderLight card-shadow h-full flex flex-col">
+                            <div class="flex gap-1 mb-4 text-[#FBBF24]">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-textMuted italic mb-6 leading-relaxed flex-grow">"Dulu selalu gagal konsisten catat keuangan. Pakai ini jadi gampang banget, tinggal chat pas lagi nunggu MRT. <strong class="text-textDark font-semibold">Sebulan udah kelihatan pola pengeluaran saya.</strong>"</p>
+                            <div class="flex items-center gap-3 mt-auto">
+                                <div class="w-12 h-12 rounded-full bg-[#FCE7F3] text-[#DB2777] flex items-center justify-center font-bold text-lg shrink-0">RA</div>
+                                <div>
+                                    <h4 class="font-bold text-textDark text-sm">Rina A.</h4>
+                                    <p class="text-xs text-textLight">Marketing Staff, Jakarta</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="snap-center shrink-0 w-[85%]">
+                        <div class="bg-white rounded-[20px] p-6 border border-borderLight card-shadow h-full flex flex-col">
+                            <div class="flex gap-1 mb-4 text-[#FBBF24]">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-textMuted italic mb-6 leading-relaxed flex-grow">"Sebagai freelancer, pengeluaran gak rutin tiap bulan. Dengan tool ini jadi bisa track mana yang perlu dipotong. <strong class="text-textDark font-semibold">Voice input-nya game changer banget!</strong>"</p>
+                            <div class="flex items-center gap-3 mt-auto">
+                                <div class="w-12 h-12 rounded-full bg-[#DBEAFE] text-[#2563EB] flex items-center justify-center font-bold text-lg shrink-0">BP</div>
+                                <div>
+                                    <h4 class="font-bold text-textDark text-sm">Budi P.</h4>
+                                    <p class="text-xs text-textLight">Freelancer, Bandung</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="snap-center shrink-0 w-[85%]">
+                        <div class="bg-white rounded-[20px] p-6 border border-borderLight card-shadow h-full flex flex-col">
+                            <div class="flex gap-1 mb-4 text-[#FBBF24]">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-textMuted italic mb-6 leading-relaxed flex-grow">"Yang paling saya suka data ada di sheet sendiri. <strong class="text-textDark font-semibold">Gak perlu khawatir privasi bocor ke pihak lain.</strong> Setup-nya juga gampang, 10 menit beres."</p>
+                            <div class="flex items-center gap-3 mt-auto">
+                                <div class="w-12 h-12 rounded-full bg-[#F3E8FF] text-[#9333EA] flex items-center justify-center font-bold text-lg shrink-0">SW</div>
+                                <div>
+                                    <h4 class="font-bold text-textDark text-sm">Sinta W.</h4>
+                                    <p class="text-xs text-textLight">HR Manager, Surabaya</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center gap-2 mt-4" id="testi-dots">
+                    <button class="w-2 h-2 rounded-full bg-primary transition-all duration-300"></button>
+                    <button class="w-2 h-2 rounded-full bg-border transition-all duration-300"></button>
+                    <button class="w-2 h-2 rounded-full bg-border transition-all duration-300"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-12 px-4 bg-bgMain">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-8 reveal">
+                <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-3">FAQ</span>
+                <h2 class="font-display text-2xl font-bold text-textDark mb-2">Pertanyaan Umum</h2>
+                <p class="text-textMuted">Jawaban untuk pertanyaan yang sering diajukan</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item reveal" style="animation-delay: 0.1s;">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Apakah data keuangan saya aman?</span>
+                        <span class="faq-icon-wrapper">
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="faq-divider"></div>
+                            <p class="faq-answer">Data kamu disimpan di Google Sheets milik kamu sendiri. Jadi kamu punya full control atas data tersebut, bukan di server pihak ketiga. Privasi kamu tetap terjaga sepenuhnya.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="animation-delay: 0.15s;">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Butuh aplikasi khusus untuk menggunakannya?</span>
+                        <span class="faq-icon-wrapper">
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="faq-divider"></div>
+                            <p class="faq-answer">Tidak perlu! Cukup akses via browser atau platform chat yang sudah familiar. Tinggal chat, data langsung tercatat. Tanpa perlu install aplikasi tambahan yang makan memori HP.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="animation-delay: 0.2s;">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Bisa pakai voice input?</span>
+                        <span class="faq-icon-wrapper">
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="faq-divider"></div>
+                            <p class="faq-answer">Bisa banget! Kamu tinggal pakai fitur voice input di keyboard HP atau browser, bicara seperti biasa, dan AI akan mencatat transaksi kamu. Praktis saat lagi di jalan atau sibuk.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="animation-delay: 0.25s;">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Berapa kali pembayaran?</span>
+                        <span class="faq-icon-wrapper">
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="faq-divider"></div>
+                            <p class="faq-answer">Hanya sekali bayar untuk akses selamanya. Termasuk semua update dan improvement yang akan datang tanpa biaya tambahan. Tidak ada biaya bulanan atau tahunan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="animation-delay: 0.3s;">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Apakah ada garansi?</span>
+                        <span class="faq-icon-wrapper">
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="faq-divider"></div>
+                            <p class="faq-answer">Kami menyediakan demo dan penjelasan lengkap sebelum kamu membeli. Pastikan kamu sudah paham fitur dan manfaatnya sebelum checkout. Tim support kami juga siap membantu jika ada pertanyaan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 bg-white">
+        <div class="max-w-md mx-auto reveal">
+            <div class="text-center mb-8">
+                <h2 class="font-display text-xl font-bold text-textDark">Dipercaya Ratusan Pengguna</h2>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <div class="p-4">
+                    <div class="text-2xl font-bold gradient-text">300+</div>
+                    <div class="text-textMuted text-xs">Pengguna Aktif</div>
+                </div>
+                <div class="p-4 border-x border-border">
+                    <div class="text-2xl font-bold gradient-text">4.8</div>
+                    <div class="text-textMuted text-xs">Rating Kepuasan</div>
+                </div>
+                <div class="p-4">
+                    <div class="text-2xl font-bold gradient-text">15K+</div>
+                    <div class="text-textMuted text-xs">Transaksi Dicatat</div>
+                </div>
+            </div>
+
+            <div class="flex justify-center items-center gap-6 mt-8 pt-6 border-t border-border">
+                <div class="flex items-center gap-2 text-textLight text-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    <span>Data Aman</span>
+                </div>
+                <div class="flex items-center gap-2 text-textLight text-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    <span>Pembayaran Aman</span>
+                </div>
+                <div class="flex items-center gap-2 text-textLight text-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    <span>Akses Instan</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="conversion" class="py-12 px-4 bg-gradient-to-b from-white via-orange-50 to-orange-100">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-6 reveal">
+                <span class="inline-block bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">PENAWARAN SPESIAL</span>
+                <h2 class="font-display text-2xl font-bold text-textDark mb-2">Mulai Catat Keuangan dengan Cara Mudah</h2>
+                <p class="text-textMuted text-sm">Harga promo terbatas. Sisa slot semakin berkurang.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl card-shadow p-6 reveal">
+                <div class="mb-6">
+                    <h3 class="font-semibold text-textDark mb-3">Yang Kamu Dapat:</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-sm">
+                            <svg class="w-5 h-5 text-success flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            <span class="text-textDark">Akses Excellearn Wealth Tracker</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-sm">
+                            <svg class="w-5 h-5 text-success flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            <span class="text-textDark">Google Sheet Template untuk Integrasi</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-sm">
+                            <svg class="w-5 h-5 text-success flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            <span class="text-textDark">Lifetime Update (tanpa biaya tambahan)</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-sm">
+                            <svg class="w-5 h-5 text-success flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            <span class="text-textDark">Support via Chat</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-bgMain rounded-xl p-4 mb-6">
+                    <table class="w-full text-sm">
+                        <tbody>
+                            <tr class="border-b border-border">
+                                <td class="py-2 text-textMuted">Excellearn Wealth Tracker</td>
+                                <td class="py-2 text-right text-textDark">Rp 200.000</td>
+                            </tr>
+                            <tr class="border-b border-border">
+                                <td class="py-2 text-textMuted">Google Sheet Template</td>
+                                <td class="py-2 text-right text-textDark">Rp 70.000</td>
+                            </tr>
+                            <tr class="border-b border-border">
+                                <td class="py-2 text-textMuted">Lifetime Update</td>
+                                <td class="py-2 text-right text-textDark">Rp 50.000</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-semibold text-textDark">Total Value</td>
+                                <td class="py-2 text-right font-semibold text-textDark">Rp 325.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center mb-6">
+                    <div class="flex items-center justify-center gap-2 mb-2">
+                        <span class="text-textLight line-through text-lg">Rp 325.000</span>
+                        <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded">HEMAT 70%</span>
+                    </div>
+                    <div class="text-4xl font-bold gradient-text">Rp 99.000</div>
+                    <p class="text-textMuted text-sm mt-1">Sekali bayar, akses selamanya</p>
+                </div>
+
+                <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 text-red-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="text-red-600 font-medium text-sm">Sisa Slot: <span id="slot-count-2" class="font-bold">37</span></span>
+                    </div>
+                </div>
+
+                <a href="https://belajardisini.myscalev.com/excellearn" data-action="cta-click" class="btn-primary no-underline inline-flex items-center justify-center gap-2 w-full py-4 rounded-xl font-semibold text-white text-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Mulai Catat dengan AI
+                </a>
+
+                <div class="flex items-center justify-center gap-4 mt-4 text-xs text-textLight">
+                    <span class="flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg>
+                        Pembayaran Aman
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                        Akses Instan
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 px-4 bg-textDark">
+        <div class="max-w-md mx-auto text-center">
+            <p class="text-white/60 text-sm mb-4">Excellearn Wealth Tracker by Mrexcellearn</p>
+            <div class="flex justify-center gap-4 text-xs text-white/40">
+                <a href="#" class="hover:text-white/60 transition-colors no-underline">Syarat & Ketentuan</a>
+                <span>|</span>
+                <a href="#" class="hover:text-white/60 transition-colors no-underline">Kebijakan Privasi</a>
+            </div>
+            <p class="text-white/30 text-xs mt-4">2025 Excellearn. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="sticky-cta" class="fixed bottom-0 left-0 right-0 sticky-cta p-4 border-t border-border z-50 md:hidden transform translate-y-full transition-transform duration-300">
+        <div class="max-w-md mx-auto">
+            <a href="#conversion" data-action="cta-click" class="btn-primary no-underline inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                Mulai Catat dengan AI - Rp 99.000
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // DOM References
+        const stickyCta = document.getElementById('sticky-cta');
+        const faqItems = document.querySelectorAll('.faq-item');
+        const revealElements = document.querySelectorAll('.reveal');
+        const slotCountElements = document.querySelectorAll('[id^="slot-count"]');
+        const carouselTrack = document.getElementById('carousel-track');
+        const carouselDots = document.getElementById('carousel-dots');
+        const carouselProgress = document.getElementById('carousel-progress');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+
+        // Carousel State
+        let currentSlide = 0;
+        const totalSlides = 4;
+        const autoPlayInterval = 5000;
+        let autoPlayTimer = null;
+        let progressTimer = null;
+        let progressValue = 0;
+
+        // Slot state
+        let currentSlots = 37;
+
+        // Carousel Functions
+        function updateCarousel() {
+            if (carouselTrack) {
+                carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
+            const dots = carouselDots.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+            resetProgress();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+            resetProgress();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+            resetProgress();
+        }
+
+        function resetProgress() {
+            progressValue = 0;
+            if (carouselProgress) {
+                carouselProgress.style.width = '0%';
+            }
+        }
+
+        function startAutoPlay() {
+            stopAutoPlay();
+            autoPlayTimer = setInterval(nextSlide, autoPlayInterval);
+            progressTimer = setInterval(() => {
+                progressValue += 100 / (autoPlayInterval / 50);
+                if (carouselProgress) {
+                    carouselProgress.style.width = `${Math.min(progressValue, 100)}%`;
+                }
+            }, 50);
+        }
+
+        function stopAutoPlay() {
+            if (autoPlayTimer) {
+                clearInterval(autoPlayTimer);
+                autoPlayTimer = null;
+            }
+            if (progressTimer) {
+                clearInterval(progressTimer);
+                progressTimer = null;
+            }
+        }
+
+        // Initialize Carousel
+        if (carouselTrack && carouselDots && prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => { prevSlide(); startAutoPlay(); });
+            nextBtn.addEventListener('click', () => { nextSlide(); startAutoPlay(); });
+            carouselDots.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+                dot.addEventListener('click', () => { goToSlide(index); startAutoPlay(); });
+            });
+
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            carouselTrack.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                stopAutoPlay();
+            }, { passive: true });
+
+            carouselTrack.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) nextSlide();
+                    else prevSlide();
+                }
+                startAutoPlay();
+            }, { passive: true });
+
+            const carouselContainer = document.querySelector('.carousel-container');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+                carouselContainer.addEventListener('mouseleave', startAutoPlay);
+            }
+            startAutoPlay();
+        }
+
+        // TESTIMONIAL SCROLL LOGIC
+        const testiTrack = document.getElementById('testi-track');
+        const testiDots = document.getElementById('testi-dots');
+
+        if (testiTrack && testiDots) {
+            const dots = testiDots.children;
+            testiTrack.addEventListener('scroll', () => {
+                const scrollLeft = testiTrack.scrollLeft;
+                const width = testiTrack.offsetWidth;
+                const index = Math.round(scrollLeft / width);
+                
+                Array.from(dots).forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.add('bg-primary');
+                        dot.classList.remove('bg-border');
+                    } else {
+                        dot.classList.remove('bg-primary');
+                        dot.classList.add('bg-border');
+                    }
+                });
+            });
+            
+            Array.from(dots).forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    const cardWidth = testiTrack.querySelector('.snap-center').offsetWidth + 16; 
+                    testiTrack.scrollTo({
+                        left: cardWidth * i,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        }
+
+        // Scroll reveal observer
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Sticky CTA logic
+        let lastScrollY = 0;
+        let ticking = false;
+
+        function handleScroll() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+
+            if (scrollY > 300 && scrollY < docHeight - windowHeight - 300) {
+                if (stickyCta) stickyCta.classList.remove('translate-y-full');
+            } else {
+                if (stickyCta) stickyCta.classList.add('translate-y-full');
+            }
+
+            const mainHeader = document.querySelector('header');
+            if (mainHeader) {
+                if (scrollY > 50 && scrollY > lastScrollY) {
+                    mainHeader.classList.add('-translate-y-full');
+                } else {
+                    mainHeader.classList.remove('-translate-y-full');
+                }
+            }
+
+            lastScrollY = scrollY;
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                window.requestAnimationFrame(handleScroll);
+                ticking = true;
+            }
+        });
+
+        // FAQ Accordion
+        faqItems.forEach(item => {
+            const trigger = item.querySelector('.faq-trigger');
+            if (trigger) {
+                trigger.addEventListener('click', function () {
+                    const isOpen = item.classList.contains('open');
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('open');
+                            const otherTrigger = otherItem.querySelector('.faq-trigger');
+                            if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                    if (isOpen) {
+                        item.classList.remove('open');
+                        trigger.setAttribute('aria-expanded', 'false');
+                    } else {
+                        item.classList.add('open');
+                        trigger.setAttribute('aria-expanded', 'true');
+                    }
+                });
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href && href !== '#') {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+
+        // Simulate slot countdown
+        function updateSlotCount() {
+            if (Math.random() > 0.95 && currentSlots > 10) {
+                currentSlots--;
+                slotCountElements.forEach(el => el.textContent = currentSlots);
+            }
+        }
+        setInterval(updateSlotCount, 30000);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.classList.add('loaded');
+            const heroReveals = document.querySelectorAll('.hero-gradient .reveal');
+            heroReveals.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.15}s`;
+                el.classList.add('active');
+            });
+
+            // PIXEL EVENT TRACKER FOR CTA
+            document.querySelectorAll('[data-action="cta-click"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (typeof fbq === 'function') {
+                        fbq('track', 'Lead', {
+                            content_name: 'Excellearn Wealth Tracker Purchase Initiation',
+                            value: 49999,
+                            currency: 'IDR'
+                        });
+                    }
+                });
+            });
+        });
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.style.scrollBehavior = 'auto';
+            revealElements.forEach(el => el.classList.add('active'));
+            stopAutoPlay();
+        }
+    </script>
+</body>
+</html>
